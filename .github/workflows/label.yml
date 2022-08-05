@@ -14,4 +14,5 @@ jobs:
         with:
           keywords: '["label", "test"]'
           labels: '["good first issue", "foo"]'
+          relabel: true
           github-token: "${{ secrets.GITHUB_TOKEN }}"

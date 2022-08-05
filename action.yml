@@ -11,6 +11,8 @@ inputs:
     description: "assignees to be assigned when keyword is found"
   labels:
     description: "labels to be set when keyword is found"
+  relabel:
+    description: "unset the labels before setting them when keyword is found"
 
 outputs:
   title:

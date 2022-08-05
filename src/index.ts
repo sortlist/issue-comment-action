@@ -35,6 +35,7 @@ async function run() {
     addCommentReaction(token, comment.id);
 
     const labelsInput: string = core.getInput("labels");
+    const relabelInput: string = core.getInput("relabel");
     const assigneesInput: string = core.getInput("assignees");
     if (!labelsInput && !assigneesInput) {
       core.setFailed(
@@ -44,8 +45,9 @@ async function run() {
 
     if (labelsInput) {
       const labels: string[] = JSON.parse(labelsInput);
+      const relabel: boolean = JSON.parse(relabelInput);
       console.log(labels);
-      setIssueLabel(token, labels);
+      setIssueLabel(token, labels, relabel);
       core.setOutput("labeled", true.toString());
     }
 

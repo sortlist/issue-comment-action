@@ -1,8 +1,10 @@
 import * as github from "@actions/github";
 import { getRepo, getIssueNumber } from "./github";
 
-export const setIssueLabel = async (token: string, labels: string[]) => {
-  const octokit = new github.GitHub(token);
+export const setIssueLabel = async (token: string,
+				              labels: string[],
+                      relabel: boolean) => {
+  const octokit = github.getOctokit(token);
 
   const issue_number = getIssueNumber();
 
@@ -10,7 +12,17 @@ export const setIssueLabel = async (token: string, labels: string[]) => {
     throw new Error("No Issue Provided");
   }
 
-  await octokit.issues.addLabels({
+  if (relabel) {
+    await Promise.all(labels.map(async (label) => {
+      await octokit.rest.issues.deleteLabel({
+        ...getRepo(),
+        issue_number,
+        name: label
+      });
+    }));
+  }
+
+  await octokit.rest.issues.addLabels({
     ...getRepo(),
     issue_number,
     labels: labels
