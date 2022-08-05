@@ -1,7 +1,6 @@
 name: "Test Issue Label"
-on:
-  issues:
-    types: [opened]
+on: issue_comment
+
 
 jobs:
   test:
